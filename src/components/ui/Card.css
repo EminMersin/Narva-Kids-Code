@@ -1,0 +1,9 @@
+/* Card component styling */
+.app-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  margin: 0.5rem 0;
+}

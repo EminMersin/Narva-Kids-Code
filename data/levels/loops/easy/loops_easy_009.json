@@ -1,0 +1,94 @@
+{
+  "id": "loops_easy_009",
+  "world": "loops",
+  "mode": "easy",
+  "order": 9,
+  "title": "While Sayaci Kolay 9",
+  "concept": "while",
+  "allowedSyntax": [
+    "assignment",
+    "operator",
+    "while",
+    "for_range"
+  ],
+  "starterBlocks": [],
+  "requiredConcepts": [
+    "while"
+  ],
+  "maxLoopIterations": 24,
+  "learningOutcome": "Cocuk while dongusunu sayac azaltilarak guvenli kullanir.",
+  "topicTags": [
+    "loops",
+    "easy",
+    "while"
+  ],
+  "childIntro": "While kosul dogru oldugu surece calisir; sayaci azaltmayi unutma.",
+  "grid": {
+    "rows": 5,
+    "cols": 5
+  },
+  "player": {
+    "x": 0,
+    "y": 2,
+    "direction": "right"
+  },
+  "goal": {
+    "x": 2,
+    "y": 2,
+    "type": "door"
+  },
+  "obstacles": [],
+  "items": [],
+  "availableCommands": [
+    "assignment",
+    "operator",
+    "while",
+    "for_range",
+    "move_forward",
+    "move_up",
+    "move_right",
+    "move_left",
+    "move_down"
+  ],
+  "availableBlocks": [
+    "assignment",
+    "operator",
+    "while",
+    "for_range",
+    "move_forward",
+    "move_up",
+    "move_right",
+    "move_left",
+    "move_down"
+  ],
+  "successRules": {
+    "mustReachGoal": true,
+    "mustCollectItems": [],
+    "requiredCommands": [],
+    "forbiddenCommands": []
+  },
+  "starRules": {
+    "oneStar": {
+      "mustComplete": true
+    },
+    "twoStars": {
+      "maxCommands": 4
+    },
+    "threeStars": {
+      "maxCommands": 2
+    }
+  },
+  "hints": [
+    "While icinde sayaci degistir.",
+    "For range tekrar sayisini parantezden alir.",
+    "Donguler tekrar eden kodu kisaltir."
+  ],
+  "solution": {
+    "logic": "While kosul dogru oldugu surece calisir; sayaci azaltmayi unutma.",
+    "commands": [
+      "move_right",
+      "move_right"
+    ],
+    "pythonCode": "steps = 2\nwhile steps > 0:\n  move_right()\n  steps = steps - 1"
+  }
+}

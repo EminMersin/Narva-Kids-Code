@@ -1,0 +1,66 @@
+{
+  "id": "movement_easy_004",
+  "world": "movement",
+  "mode": "easy",
+  "order": 4,
+  "title": "Dar Gecit",
+  "learningOutcome": "Engellerin arasindan guvenli yolu secme.",
+  "topicTags": ["movement", "commands", "obstacle", "path"],
+  "childIntro": "Robotun yolu kapali. Yukaridan dolasarak yildiza ulas.",
+  "grid": {
+    "rows": 5,
+    "cols": 5
+  },
+  "player": {
+    "x": 0,
+    "y": 2,
+    "direction": "right"
+  },
+  "goal": {
+    "x": 4,
+    "y": 2,
+    "type": "door"
+  },
+  "obstacles": [
+    {
+      "x": 2,
+      "y": 2,
+      "type": "wall"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "type": "wall"
+    }
+  ],
+  "items": [],
+  "availableCommands": ["move_forward", "move_up", "move_right", "move_left", "move_down"],
+  "availableBlocks": ["move_forward", "move_up", "move_right", "move_left", "move_down"],
+  "successRules": {
+    "mustReachGoal": true,
+    "mustCollectItems": [],
+    "requiredCommands": [],
+    "forbiddenCommands": []
+  },
+  "starRules": {
+    "oneStar": {
+      "mustComplete": true
+    },
+    "twoStars": {
+      "maxCommands": 8
+    },
+    "threeStars": {
+      "maxCommands": 6
+    }
+  },
+  "hints": [
+    "Ortadaki engel duz yolu kapatiyor.",
+    "Once yukari cik, sonra engelin ustunden saga ilerle.",
+    "Bir Yukari, dort Sag ve bir Asagi blogu iyi bir rota olabilir."
+  ],
+  "solution": {
+    "logic": "Robot yukaridan dolasarak engeli gecer ve hedefe iner.",
+    "commands": ["move_up", "move_right", "move_right", "move_right", "move_right", "move_down"],
+    "pythonCode": "move_up()\nmove_right()\nmove_right()\nmove_right()\nmove_right()\nmove_down()"
+  }
+}

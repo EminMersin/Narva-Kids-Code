@@ -1,0 +1,55 @@
+{
+  "id": "movement_easy_002",
+  "world": "movement",
+  "mode": "easy",
+  "order": 2,
+  "title": "Yolu Ciz",
+  "learningOutcome": "Farkli yon bloklarini sirayla kullanma.",
+  "topicTags": ["movement", "commands", "sequence"],
+  "childIntro": "Robotu once yukari, sonra saga goturerek hedefe ulas.",
+  "grid": {
+    "rows": 5,
+    "cols": 5
+  },
+  "player": {
+    "x": 1,
+    "y": 3,
+    "direction": "right"
+  },
+  "goal": {
+    "x": 3,
+    "y": 1,
+    "type": "door"
+  },
+  "obstacles": [],
+  "items": [],
+  "availableCommands": ["move_up", "move_right", "move_left", "move_down", "move_forward"],
+  "availableBlocks": ["move_up", "move_right", "move_left", "move_down", "move_forward"],
+  "successRules": {
+    "mustReachGoal": true,
+    "mustCollectItems": [],
+    "requiredCommands": [],
+    "forbiddenCommands": []
+  },
+  "starRules": {
+    "oneStar": {
+      "mustComplete": true
+    },
+    "twoStars": {
+      "maxCommands": 5
+    },
+    "threeStars": {
+      "maxCommands": 4
+    }
+  },
+  "hints": [
+    "Hedef robotun yukarisinda ve saginda kaliyor.",
+    "Once Yukari bloklarini, sonra Sag bloklarini dene.",
+    "Iki Yukari ve iki Sag blogu yeterli olabilir."
+  ],
+  "solution": {
+    "logic": "Robot once iki kare yukari cikar, sonra iki kare saga giderek hedefe ulasir.",
+    "commands": ["move_up", "move_up", "move_right", "move_right"],
+    "pythonCode": "move_up()\nmove_up()\nmove_right()\nmove_right()"
+  }
+}

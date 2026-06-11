@@ -1,0 +1,61 @@
+{
+  "id": "movement_easy_003",
+  "world": "movement",
+  "mode": "easy",
+  "order": 3,
+  "title": "Engelin Etrafindan",
+  "learningOutcome": "Engelden kacmak icin yon bloklarini dogru siralama.",
+  "topicTags": ["movement", "commands", "obstacle", "direction"],
+  "childIntro": "Robotun onunde engel var. Asagi ve saga giderek hedefe ulas.",
+  "grid": {
+    "rows": 5,
+    "cols": 5
+  },
+  "player": {
+    "x": 1,
+    "y": 2,
+    "direction": "right"
+  },
+  "goal": {
+    "x": 3,
+    "y": 4,
+    "type": "door"
+  },
+  "obstacles": [
+    {
+      "x": 2,
+      "y": 2,
+      "type": "wall"
+    }
+  ],
+  "items": [],
+  "availableCommands": ["move_forward", "move_up", "move_right", "move_left", "move_down"],
+  "availableBlocks": ["move_forward", "move_up", "move_right", "move_left", "move_down"],
+  "successRules": {
+    "mustReachGoal": true,
+    "mustCollectItems": [],
+    "requiredCommands": [],
+    "forbiddenCommands": []
+  },
+  "starRules": {
+    "oneStar": {
+      "mustComplete": true
+    },
+    "twoStars": {
+      "maxCommands": 7
+    },
+    "threeStars": {
+      "maxCommands": 4
+    }
+  },
+  "hints": [
+    "Robotun saginda engel var, once asagi in.",
+    "Engelin altindan dolasmak icin Asagi ve Sag bloklarini kullan.",
+    "Iki Asagi ve iki Sag blogu hedefe ulastirir."
+  ],
+  "solution": {
+    "logic": "Robot iki kare asagi iner, sonra iki kare saga giderek engelin etrafindan hedefe ulasir.",
+    "commands": ["move_down", "move_down", "move_right", "move_right"],
+    "pythonCode": "move_down()\nmove_down()\nmove_right()\nmove_right()"
+  }
+}

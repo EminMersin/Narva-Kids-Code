@@ -1,0 +1,76 @@
+{
+  "id": "movement_easy_006",
+  "world": "movement",
+  "mode": "easy",
+  "order": 6,
+  "title": "Mini Challenge",
+  "learningOutcome": "Onceki hareket becerilerini kisa bir meydan okumada kullanma.",
+  "topicTags": ["movement", "commands", "challenge", "obstacle"],
+  "childIntro": "Robot engellerin arasindan gecip hedefe ulasmak icin en kisa rotayi bulmali.",
+  "grid": {
+    "rows": 6,
+    "cols": 6
+  },
+  "player": {
+    "x": 1,
+    "y": 4,
+    "direction": "right"
+  },
+  "goal": {
+    "x": 4,
+    "y": 1,
+    "type": "door"
+  },
+  "obstacles": [
+    {
+      "x": 2,
+      "y": 3,
+      "type": "wall"
+    },
+    {
+      "x": 3,
+      "y": 3,
+      "type": "wall"
+    },
+    {
+      "x": 4,
+      "y": 3,
+      "type": "wall"
+    },
+    {
+      "x": 3,
+      "y": 2,
+      "type": "wall"
+    }
+  ],
+  "items": [],
+  "availableCommands": ["move_forward", "move_up", "move_right", "move_left", "move_down"],
+  "availableBlocks": ["move_forward", "move_up", "move_right", "move_left", "move_down"],
+  "successRules": {
+    "mustReachGoal": true,
+    "mustCollectItems": [],
+    "requiredCommands": [],
+    "forbiddenCommands": []
+  },
+  "starRules": {
+    "oneStar": {
+      "mustComplete": true
+    },
+    "twoStars": {
+      "maxCommands": 8
+    },
+    "threeStars": {
+      "maxCommands": 6
+    }
+  },
+  "hints": [
+    "Engel duvarinin ustunden dolan.",
+    "Once yukari cikmak daha guvenli olabilir.",
+    "Uc Yukari ve uc Sag blogu hedefe ulastirir."
+  ],
+  "solution": {
+    "logic": "Robot uc kare yukari cikar ve uc kare saga giderek hedefe ulasir.",
+    "commands": ["move_up", "move_up", "move_up", "move_right", "move_right", "move_right"],
+    "pythonCode": "move_up()\nmove_up()\nmove_up()\nmove_right()\nmove_right()\nmove_right()"
+  }
+}

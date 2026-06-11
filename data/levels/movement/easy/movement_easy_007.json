@@ -1,0 +1,66 @@
+{
+  "id": "movement_easy_007",
+  "world": "movement",
+  "mode": "easy",
+  "order": 7,
+  "title": "Tekrar Eden Yol",
+  "learningOutcome": "Ayni yon bloklarinin tekrar eden bir desen olusturdugunu fark etme.",
+  "topicTags": ["movement", "commands", "sequence", "pattern"],
+  "childIntro": "Robot hedefe giderken ayni bloklari pes pese kullanacak. Deseni bul ve yolu tamamla.",
+  "grid": {
+    "rows": 5,
+    "cols": 6
+  },
+  "player": {
+    "x": 0,
+    "y": 1,
+    "direction": "right"
+  },
+  "goal": {
+    "x": 5,
+    "y": 3,
+    "type": "door"
+  },
+  "obstacles": [
+    {
+      "x": 3,
+      "y": 2,
+      "type": "wall"
+    },
+    {
+      "x": 4,
+      "y": 2,
+      "type": "wall"
+    }
+  ],
+  "items": [],
+  "availableCommands": ["move_forward", "move_up", "move_right", "move_left", "move_down"],
+  "availableBlocks": ["move_forward", "move_up", "move_right", "move_left", "move_down"],
+  "successRules": {
+    "mustReachGoal": true,
+    "mustCollectItems": [],
+    "requiredCommands": [],
+    "forbiddenCommands": []
+  },
+  "starRules": {
+    "oneStar": {
+      "mustComplete": true
+    },
+    "twoStars": {
+      "maxCommands": 9
+    },
+    "threeStars": {
+      "maxCommands": 7
+    }
+  },
+  "hints": [
+    "Yolda Sag bloklari pes pese tekrar ediyor.",
+    "Once iki kez Sag, sonra iki kez Asagi kullanmayi dusun.",
+    "Desen: Sag, Sag, Asagi, Asagi, Sag, Sag, Sag."
+  ],
+  "solution": {
+    "logic": "Robot iki kare saga gider, iki kare asagi iner ve uc kare daha saga giderek hedefe ulasir.",
+    "commands": ["move_right", "move_right", "move_down", "move_down", "move_right", "move_right", "move_right"],
+    "pythonCode": "move_right()\nmove_right()\nmove_down()\nmove_down()\nmove_right()\nmove_right()\nmove_right()"
+  }
+}

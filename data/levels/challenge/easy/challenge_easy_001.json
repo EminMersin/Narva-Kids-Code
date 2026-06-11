@@ -1,0 +1,101 @@
+{
+  "id": "challenge_easy_001",
+  "world": "challenge",
+  "mode": "easy",
+  "order": 1,
+  "title": "Python Mini Gorev Kolay 1",
+  "concept": "mini_challenge",
+  "allowedSyntax": [
+    "assignment",
+    "operator",
+    "if_else",
+    "for_range",
+    "match_case"
+  ],
+  "starterBlocks": [],
+  "requiredConcepts": [
+    "mini_challenge"
+  ],
+  "maxLoopIterations": 24,
+  "learningOutcome": "Cocuk degisken, operator, if else, for ve match case kavramlarini birlestirir.",
+  "topicTags": [
+    "challenge",
+    "easy",
+    "mini_challenge"
+  ],
+  "childIntro": "Bu gorevde birden fazla Python fikrini ayni rotada kullan.",
+  "grid": {
+    "rows": 5,
+    "cols": 7
+  },
+  "player": {
+    "x": 0,
+    "y": 2,
+    "direction": "right"
+  },
+  "goal": {
+    "x": 6,
+    "y": 1,
+    "type": "door"
+  },
+  "obstacles": [],
+  "items": [],
+  "availableCommands": [
+    "assignment",
+    "operator",
+    "if_else",
+    "for_range",
+    "match_case",
+    "move_forward",
+    "move_up",
+    "move_right",
+    "move_left",
+    "move_down"
+  ],
+  "availableBlocks": [
+    "assignment",
+    "operator",
+    "if_else",
+    "for_range",
+    "match_case",
+    "move_forward",
+    "move_up",
+    "move_right",
+    "move_left",
+    "move_down"
+  ],
+  "successRules": {
+    "mustReachGoal": true,
+    "mustCollectItems": [],
+    "requiredCommands": [],
+    "forbiddenCommands": []
+  },
+  "starRules": {
+    "oneStar": {
+      "mustComplete": true
+    },
+    "twoStars": {
+      "maxCommands": 8
+    },
+    "threeStars": {
+      "maxCommands": 6
+    }
+  },
+  "hints": [
+    "Once for dongusunu oku.",
+    "If else hangi yonde devam edecegini secer.",
+    "Match case son hareketi belirler."
+  ],
+  "solution": {
+    "logic": "Bu gorevde birden fazla Python fikrini ayni rotada kullan.",
+    "commands": [
+      "move_right",
+      "move_right",
+      "move_right",
+      "move_right",
+      "move_up",
+      "move_right(2)"
+    ],
+    "pythonCode": "steps = 4\nfor i in range(steps):\n  move_right()\nif steps > 3:\n  move_up()\nelse:\n  move_down()\nroute = \"finish\"\nmatch route:\n  case \"finish\":\n    move_right(2)\n  case _:\n    move_left()"
+  }
+}

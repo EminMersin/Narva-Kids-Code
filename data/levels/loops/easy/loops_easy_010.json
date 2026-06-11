@@ -1,0 +1,98 @@
+{
+  "id": "loops_easy_010",
+  "world": "loops",
+  "mode": "easy",
+  "order": 10,
+  "title": "For Range Kolay 10",
+  "concept": "for_range",
+  "allowedSyntax": [
+    "assignment",
+    "operator",
+    "while",
+    "for_range"
+  ],
+  "starterBlocks": [],
+  "requiredConcepts": [
+    "for_range"
+  ],
+  "maxLoopIterations": 24,
+  "learningOutcome": "Cocuk for range ile belli sayida tekrar eder.",
+  "topicTags": [
+    "loops",
+    "easy",
+    "for_range"
+  ],
+  "childIntro": "For range, kac tekrar yapilacagini bastan bilir.",
+  "grid": {
+    "rows": 5,
+    "cols": 6
+  },
+  "player": {
+    "x": 0,
+    "y": 2,
+    "direction": "right"
+  },
+  "goal": {
+    "x": 5,
+    "y": 1,
+    "type": "door"
+  },
+  "obstacles": [],
+  "items": [],
+  "availableCommands": [
+    "assignment",
+    "operator",
+    "while",
+    "for_range",
+    "move_forward",
+    "move_up",
+    "move_right",
+    "move_left",
+    "move_down"
+  ],
+  "availableBlocks": [
+    "assignment",
+    "operator",
+    "while",
+    "for_range",
+    "move_forward",
+    "move_up",
+    "move_right",
+    "move_left",
+    "move_down"
+  ],
+  "successRules": {
+    "mustReachGoal": true,
+    "mustCollectItems": [],
+    "requiredCommands": [],
+    "forbiddenCommands": []
+  },
+  "starRules": {
+    "oneStar": {
+      "mustComplete": true
+    },
+    "twoStars": {
+      "maxCommands": 8
+    },
+    "threeStars": {
+      "maxCommands": 6
+    }
+  },
+  "hints": [
+    "While icinde sayaci degistir.",
+    "For range tekrar sayisini parantezden alir.",
+    "Donguler tekrar eden kodu kisaltir."
+  ],
+  "solution": {
+    "logic": "For range, kac tekrar yapilacagini bastan bilir.",
+    "commands": [
+      "move_right",
+      "move_right",
+      "move_right",
+      "move_up",
+      "move_right",
+      "move_right"
+    ],
+    "pythonCode": "for i in range(3):\n  move_right()\nmove_up()\nfor i in range(2):\n  move_right()"
+  }
+}

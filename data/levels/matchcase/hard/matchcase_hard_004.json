@@ -1,0 +1,88 @@
+{
+  "id": "matchcase_hard_004",
+  "world": "matchcase",
+  "mode": "hard",
+  "order": 4,
+  "title": "Match Case Secimi Zor 4",
+  "concept": "match_case",
+  "allowedSyntax": [
+    "assignment",
+    "match_case"
+  ],
+  "starterBlocks": [],
+  "requiredConcepts": [
+    "match_case"
+  ],
+  "maxLoopIterations": 24,
+  "learningOutcome": "Cocuk match case ile degerin hangi yola gidecegini secer.",
+  "topicTags": [
+    "matchcase",
+    "hard",
+    "match_case"
+  ],
+  "childIntro": "Match bir degeri kontrol eder ve uygun case blogunu calistirir.",
+  "grid": {
+    "rows": 5,
+    "cols": 5
+  },
+  "player": {
+    "x": 0,
+    "y": 2,
+    "direction": "right"
+  },
+  "goal": {
+    "x": 2,
+    "y": 3,
+    "type": "door"
+  },
+  "obstacles": [],
+  "items": [],
+  "availableCommands": [
+    "assignment",
+    "match_case",
+    "move_forward",
+    "move_up",
+    "move_right",
+    "move_left",
+    "move_down"
+  ],
+  "availableBlocks": [
+    "assignment",
+    "match_case",
+    "move_forward",
+    "move_up",
+    "move_right",
+    "move_left",
+    "move_down"
+  ],
+  "successRules": {
+    "mustReachGoal": true,
+    "mustCollectItems": [],
+    "requiredCommands": [],
+    "forbiddenCommands": []
+  },
+  "starRules": {
+    "oneStar": {
+      "mustComplete": true
+    },
+    "twoStars": {
+      "maxCommands": 4
+    },
+    "threeStars": {
+      "maxCommands": 2
+    }
+  },
+  "hints": [
+    "Match degeri case satirlariyla karsilastirir.",
+    "case _ hicbiri uymazsa calisir.",
+    "Secilen case sadece kendi icindeki komutu calistirir."
+  ],
+  "solution": {
+    "logic": "Match bir degeri kontrol eder ve uygun case blogunu calistirir.",
+    "commands": [
+      "move_down",
+      "move_right(2)"
+    ],
+    "pythonCode": "route = \"down\"\nmatch route:\n  case \"right\":\n    move_right(3)\n  case \"up\":\n    move_up()\n  case \"down\":\n    move_down()\n  case _:\n    move_right()\nmove_right(2)"
+  }
+}

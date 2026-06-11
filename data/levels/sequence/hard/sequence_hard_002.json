@@ -1,0 +1,91 @@
+{
+  "id": "sequence_hard_002",
+  "world": "sequence",
+  "mode": "hard",
+  "order": 2,
+  "title": "Degisken Kullan Zor 2",
+  "concept": "variables",
+  "allowedSyntax": [
+    "assignment",
+    "operator"
+  ],
+  "starterBlocks": [],
+  "requiredConcepts": [
+    "variables"
+  ],
+  "maxLoopIterations": 24,
+  "learningOutcome": "Cocuk bir sayiyi degiskende tutup komutta kullanir.",
+  "topicTags": [
+    "sequence",
+    "hard",
+    "variables"
+  ],
+  "childIntro": "Degisken, sayiyi saklayan kucuk bir kutu gibidir.",
+  "grid": {
+    "rows": 5,
+    "cols": 6
+  },
+  "player": {
+    "x": 0,
+    "y": 2,
+    "direction": "right"
+  },
+  "goal": {
+    "x": 5,
+    "y": 2,
+    "type": "door"
+  },
+  "obstacles": [],
+  "items": [],
+  "availableCommands": [
+    "assignment",
+    "operator",
+    "move_forward",
+    "move_up",
+    "move_right",
+    "move_left",
+    "move_down"
+  ],
+  "availableBlocks": [
+    "assignment",
+    "operator",
+    "move_forward",
+    "move_up",
+    "move_right",
+    "move_left",
+    "move_down"
+  ],
+  "successRules": {
+    "mustReachGoal": true,
+    "mustCollectItems": [],
+    "requiredCommands": [],
+    "forbiddenCommands": []
+  },
+  "starRules": {
+    "oneStar": {
+      "mustComplete": true
+    },
+    "twoStars": {
+      "maxCommands": 7
+    },
+    "threeStars": {
+      "maxCommands": 5
+    }
+  },
+  "hints": [
+    "Degisken adini komutun icinde kullanabilirsin.",
+    "+ ve - operatorleri hareket sayisini hesaplar.",
+    "Once degisken satiri calisir, sonra komutlar."
+  ],
+  "solution": {
+    "logic": "Degisken, sayiyi saklayan kucuk bir kutu gibidir.",
+    "commands": [
+      "move_up",
+      "move_right(2)",
+      "move_down",
+      "move_right",
+      "move_right(2)"
+    ],
+    "pythonCode": "steps = 2\nmove_up()\nmove_right(2)\nmove_down()\nmove_right()\nmove_right(steps)"
+  }
+}

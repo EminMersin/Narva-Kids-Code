@@ -1,0 +1,55 @@
+{
+  "id": "movement_easy_001",
+  "world": "movement",
+  "mode": "easy",
+  "order": 1,
+  "title": "Ilk Adimlar",
+  "learningOutcome": "Ayni hareket blogunu sirayla kullanarak hedefe ulasma.",
+  "topicTags": ["movement", "commands", "sequence"],
+  "childIntro": "Robot hedefe bakiyor. Ileri blogunu uc kez kullanarak hedefe ulas.",
+  "grid": {
+    "rows": 5,
+    "cols": 5
+  },
+  "player": {
+    "x": 1,
+    "y": 2,
+    "direction": "right"
+  },
+  "goal": {
+    "x": 4,
+    "y": 2,
+    "type": "door"
+  },
+  "obstacles": [],
+  "items": [],
+  "availableCommands": ["move_up", "move_right", "move_left", "move_down", "move_forward"],
+  "availableBlocks": ["move_up", "move_right", "move_left", "move_down", "move_forward"],
+  "successRules": {
+    "mustReachGoal": true,
+    "mustCollectItems": [],
+    "requiredCommands": [],
+    "forbiddenCommands": []
+  },
+  "starRules": {
+    "oneStar": {
+      "mustComplete": true
+    },
+    "twoStars": {
+      "maxCommands": 4
+    },
+    "threeStars": {
+      "maxCommands": 3
+    }
+  },
+  "hints": [
+    "Robot hedefe dogru bakiyor.",
+    "Ileri blogunu birden fazla kullanabilirsin.",
+    "Uc Ileri blogu yeterli olabilir."
+  ],
+  "solution": {
+    "logic": "Robot hedefe bakiyor ve 3 adim ilerlemeli.",
+    "commands": ["move_forward", "move_forward", "move_forward"],
+    "pythonCode": "move_forward()\nmove_forward()\nmove_forward()"
+  }
+}

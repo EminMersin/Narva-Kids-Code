@@ -1,0 +1,89 @@
+{
+  "id": "sequence_medium_001",
+  "world": "sequence",
+  "mode": "medium",
+  "order": 1,
+  "title": "Operatorle Hesapla Orta 1",
+  "concept": "operators",
+  "allowedSyntax": [
+    "assignment",
+    "operator"
+  ],
+  "starterBlocks": [],
+  "requiredConcepts": [
+    "operators"
+  ],
+  "maxLoopIterations": 24,
+  "learningOutcome": "Cocuk aritmetik operatorlerle hareket sayisini hesaplar.",
+  "topicTags": [
+    "sequence",
+    "medium",
+    "operators"
+  ],
+  "childIntro": "Operatorler sayilari birlestirir ve yeni hareket sayisi uretir.",
+  "grid": {
+    "rows": 5,
+    "cols": 8
+  },
+  "player": {
+    "x": 0,
+    "y": 2,
+    "direction": "right"
+  },
+  "goal": {
+    "x": 7,
+    "y": 1,
+    "type": "door"
+  },
+  "obstacles": [],
+  "items": [],
+  "availableCommands": [
+    "assignment",
+    "operator",
+    "move_forward",
+    "move_up",
+    "move_right",
+    "move_left",
+    "move_down"
+  ],
+  "availableBlocks": [
+    "assignment",
+    "operator",
+    "move_forward",
+    "move_up",
+    "move_right",
+    "move_left",
+    "move_down"
+  ],
+  "successRules": {
+    "mustReachGoal": true,
+    "mustCollectItems": [],
+    "requiredCommands": [],
+    "forbiddenCommands": []
+  },
+  "starRules": {
+    "oneStar": {
+      "mustComplete": true
+    },
+    "twoStars": {
+      "maxCommands": 5
+    },
+    "threeStars": {
+      "maxCommands": 3
+    }
+  },
+  "hints": [
+    "Degisken adini komutun icinde kullanabilirsin.",
+    "+ ve - operatorleri hareket sayisini hesaplar.",
+    "Once degisken satiri calisir, sonra komutlar."
+  ],
+  "solution": {
+    "logic": "Operatorler sayilari birlestirir ve yeni hareket sayisi uretir.",
+    "commands": [
+      "move_right(3)",
+      "move_up",
+      "move_right(4)"
+    ],
+    "pythonCode": "left_steps = 1 + 2\nright_steps = left_steps + 1\nmove_right(left_steps)\nmove_up()\nmove_right(right_steps)"
+  }
+}

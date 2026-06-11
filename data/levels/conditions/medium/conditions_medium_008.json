@@ -1,0 +1,106 @@
+{
+  "id": "conditions_medium_008",
+  "world": "conditions",
+  "mode": "medium",
+  "order": 8,
+  "title": "If Else Karari Orta 8",
+  "concept": "if_else",
+  "allowedSyntax": [
+    "assignment",
+    "operator",
+    "if_else",
+    "if_obstacle_ahead",
+    "pick_item"
+  ],
+  "starterBlocks": [],
+  "requiredConcepts": [
+    "if_else"
+  ],
+  "maxLoopIterations": 24,
+  "learningOutcome": "Cocuk if else ile kosula gore farkli komut calistirir.",
+  "topicTags": [
+    "conditions",
+    "medium",
+    "if_else"
+  ],
+  "childIntro": "Kosul dogruysa if blogu, degilse else blogu calisir.",
+  "grid": {
+    "rows": 5,
+    "cols": 7
+  },
+  "player": {
+    "x": 0,
+    "y": 2,
+    "direction": "right"
+  },
+  "goal": {
+    "x": 6,
+    "y": 2,
+    "type": "door"
+  },
+  "obstacles": [],
+  "items": [
+    {
+      "x": 1,
+      "y": 2,
+      "type": "carrot"
+    }
+  ],
+  "availableCommands": [
+    "assignment",
+    "operator",
+    "if_else",
+    "if_obstacle_ahead",
+    "pick_item",
+    "move_forward",
+    "move_up",
+    "move_right",
+    "move_left",
+    "move_down"
+  ],
+  "availableBlocks": [
+    "assignment",
+    "operator",
+    "if_else",
+    "if_obstacle_ahead",
+    "pick_item",
+    "move_forward",
+    "move_up",
+    "move_right",
+    "move_left",
+    "move_down"
+  ],
+  "successRules": {
+    "mustReachGoal": true,
+    "mustCollectItems": [
+      "carrot"
+    ],
+    "requiredCommands": [],
+    "forbiddenCommands": []
+  },
+  "starRules": {
+    "oneStar": {
+      "mustComplete": true
+    },
+    "twoStars": {
+      "maxCommands": 5
+    },
+    "threeStars": {
+      "maxCommands": 3
+    }
+  },
+  "hints": [
+    "If blogu once soruyu sorar.",
+    "Nesnenin uzerindeysen Topla komutunu calistir.",
+    "Else blogu kosul yanlissa calisir."
+  ],
+  "solution": {
+    "logic": "Kosul dogruysa if blogu, degilse else blogu calisir.",
+    "commands": [
+      "move_right",
+      "if item_here(): pick_item else: move_up",
+      "move_right(5)"
+    ],
+    "pythonCode": "move_right()\nif item_here():\n  pick_item()\nelse:\n  move_up()\nmove_right(5)"
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "id": "movement_medium_002",
+  "world": "movement",
+  "mode": "medium",
+  "order": 2,
+  "title": "Python Satirlari Orta 2",
+  "concept": "python_intro",
+  "allowedSyntax": [],
+  "starterBlocks": [],
+  "requiredConcepts": [
+    "python_intro"
+  ],
+  "maxLoopIterations": 24,
+  "learningOutcome": "Cocuk Python komutlarinin satir satir calistigini gorur.",
+  "topicTags": [
+    "movement",
+    "medium",
+    "python_intro"
+  ],
+  "childIntro": "Kod Modu ve Blok Modu ayni hareketleri uretir. Satirlari yukaridan asagi takip et.",
+  "grid": {
+    "rows": 5,
+    "cols": 5
+  },
+  "player": {
+    "x": 0,
+    "y": 2,
+    "direction": "right"
+  },
+  "goal": {
+    "x": 3,
+    "y": 2,
+    "type": "door"
+  },
+  "obstacles": [],
+  "items": [],
+  "availableCommands": [
+    "move_forward",
+    "move_up",
+    "move_right",
+    "move_left",
+    "move_down"
+  ],
+  "availableBlocks": [
+    "move_forward",
+    "move_up",
+    "move_right",
+    "move_left",
+    "move_down"
+  ],
+  "successRules": {
+    "mustReachGoal": true,
+    "mustCollectItems": [],
+    "requiredCommands": [],
+    "forbiddenCommands": []
+  },
+  "starRules": {
+    "oneStar": {
+      "mustComplete": true
+    },
+    "twoStars": {
+      "maxCommands": 6
+    },
+    "threeStars": {
+      "maxCommands": 4
+    }
+  },
+  "hints": [
+    "Kod satirlari yukaridan asagi calisir.",
+    "Parantez icindeki sayi tekrar eden hareketi kisaltir.",
+    "Step modu hangi satirin calistigini gosterir."
+  ],
+  "solution": {
+    "logic": "Kod Modu ve Blok Modu ayni hareketleri uretir. Satirlari yukaridan asagi takip et.",
+    "commands": [
+      "move_up",
+      "move_right(2)",
+      "move_down",
+      "move_right"
+    ],
+    "pythonCode": "move_up()\nmove_right(2)\nmove_down()\nmove_right()"
+  }
+}

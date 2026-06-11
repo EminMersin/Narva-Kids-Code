@@ -1,0 +1,55 @@
+{
+  "id": "movement_easy_008",
+  "world": "movement",
+  "mode": "easy",
+  "order": 8,
+  "title": "Tekrarla ve Ilerle",
+  "learningOutcome": "Tekrar bloguyla ayni hareketi daha az blokla ifade etme.",
+  "topicTags": ["movement", "commands", "sequence", "pattern", "loop"],
+  "childIntro": "Robot uzun bir yolda ilerliyor. Ayni hareketi tekrar bloguyla kisa yazmayi dene.",
+  "grid": {
+    "rows": 5,
+    "cols": 6
+  },
+  "player": {
+    "x": 0,
+    "y": 2,
+    "direction": "right"
+  },
+  "goal": {
+    "x": 5,
+    "y": 2,
+    "type": "door"
+  },
+  "obstacles": [],
+  "items": [],
+  "availableCommands": ["repeat", "move_forward", "move_up", "move_right", "move_left", "move_down"],
+  "availableBlocks": ["repeat", "move_forward", "move_up", "move_right", "move_left", "move_down"],
+  "successRules": {
+    "mustReachGoal": true,
+    "mustCollectItems": [],
+    "requiredCommands": ["repeat"],
+    "forbiddenCommands": []
+  },
+  "starRules": {
+    "oneStar": {
+      "mustComplete": true
+    },
+    "twoStars": {
+      "maxCommands": 3
+    },
+    "threeStars": {
+      "maxCommands": 1
+    }
+  },
+  "hints": [
+    "Ayni hareket pes pese geliyorsa Tekrarla blogunu kullanabilirsin.",
+    "Robot hedefe ulasmak icin bes kez saga gitmeli.",
+    "Tekrarla blogunda sayiyi 5 yapip ic hareketi Sag secmeyi dene."
+  ],
+  "solution": {
+    "logic": "Robot bes kare saga gider. Tekrar blogu bu yolu tek blokla anlatir.",
+    "commands": ["repeat(5): move_right"],
+    "pythonCode": "repeat(5): move_right"
+  }
+}

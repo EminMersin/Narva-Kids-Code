@@ -1,0 +1,9 @@
+/* Footer component styling */
+.app-footer {
+  background-color: rgba(255, 255, 255, 0.72);
+  color: #3e4c66;
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 0.875rem;
+  margin-top: auto;
+}

@@ -1,0 +1,636 @@
+# Narva Kids Code - MVP To-Do Listesi
+
+Son guncelleme: 2026-05-31
+
+## Faz 1 Kapanis Durumu - 2026-05-31
+
+Bu proje artik tek tek seviye ekleme asamasindan Faz 1 vertical slice kapanisina tasindi.
+Faz 1'in kapanis tanimi:
+
+- [x] Profil olusturma akisi var.
+- [x] Dunya haritasi 8 Hareket Dunyasi seviyesini gosteriyor.
+- [x] Blok editoru oyun akisi icin tek ana kaynak.
+- [x] Uretilen Python-benzeri kod read-only gosteriliyor.
+- [x] Run ve Step akisi GameEngine uzerinden calisiyor.
+- [x] MVP DSL validator/parser katmani GameEngine oncesinde komutlari dogruluyor.
+- [x] Repeat syntax Faz 1'e alindi: `repeat(5): move_right`.
+- [x] Hata ve ipucu mesajlari teknik olmayan metne cevriliyor.
+- [x] Sonuc paneli yildiz, blok sayisi ve iyilestirme geri bildirimi gosteriyor.
+- [x] Progress refresh sonrasi local olarak korunuyor.
+- [x] Progress daha iyi yildiz ve daha iyi komut sayisini koruyor.
+- [x] Tum level JSON dosyalari otomatik validasyon kapsaminda.
+- [x] Tum ornek cozumler otomatik GameEngine testiyle hedefe ulasiyor.
+
+Faz 1 kalite kapilari:
+
+- [x] `npx.cmd tsc --noEmit`
+- [x] `npm.cmd test`
+- [x] `npm.cmd run build`
+- [ ] Manuel QA: profil -> dunya haritasi -> Level 1-8 tam akis.
+- [ ] Manuel QA: desktop ve mobil gorunumde tasma/okunurluk kontrolu.
+
+## Faz 2 Kapanis Durumu - 2026-06-01
+
+Faz 2 hedefi: Cok dunyali 80 level akisi, Donguler Dunyasi, Kosullar Dunyasi ve read-only internal level preview.
+
+- [x] Merkezi level registry eklendi.
+- [x] Level sayfasi manuel JSON import listesinden registry kullanimina tasindi.
+- [x] Progress store tum level id'leriyle calisacak hale getirildi.
+- [x] Dunya haritasi 4 dunya gosterecek hale getirildi: Hareket, Siralama, Donguler, Kosullar.
+- [x] Toplam 80 level JSON dosyasi schema/test kapsaminda.
+- [x] Donguler Dunyasi ayri 20 level akisi olarak eklendi.
+- [x] Kosullar Dunyasi oynanabilir hale getirildi.
+- [x] `if obstacle_ahead(): <komut>` DSL destegi eklendi.
+- [x] GameEngine kosul komutunu calistirabiliyor.
+- [x] Blok editorune `Eger Engel Varsa` kapsayici blogu eklendi.
+- [x] `/internal/level-preview` read-only QA sayfasi eklendi.
+- [x] Ornek cozumler 80 level icin otomatik GameEngine testiyle dogrulaniyor.
+
+Faz 2 kalite kapilari:
+
+- [x] `npx.cmd tsc --noEmit`
+- [x] `npm.cmd test`
+- [x] `npm.cmd run build`
+- [ ] Manuel QA: 4 dunya haritasi, kilit akisi ve ilk/son level gezinmesi.
+- [ ] Manuel QA: `/internal/level-preview` filtreleri ve grid/JSON gorunumu.
+
+Bu liste projenin buyuk vizyonunu korur, fakat gelistirme sirasini daha gercekci hale getirir. Ana prensip: once calisan kucuk ogrenme cekirdegi, sonra 80 seviye ve platform katmanlari.
+
+## 0. Net Urun Hedefi
+
+Narva Kids Code, cocuklara algoritmik dusunme kazandiran ve blok tabanli kodlamadan Python benzeri komut yazimina yumusak gecis yaptiran yerel calisan bir egitim oyunudur.
+
+MVP'nin bitmis sayilmasi icin bir cocuk:
+
+1. Profil olusturabilmeli.
+2. Hareket Dunyasi'nda 3-5 seviyeye girebilmeli.
+3. Blok veya kod ile karakteri hedefe goturebilmeli.
+4. Hata yaptiginda cocuk dostu mesaj gormeli.
+5. Run ve Step-by-step ile cozumunu calistirabilmeli.
+6. Yildiz almali ve ilerlemesi local olarak kaydedilmeli.
+
+## 1. MVP Disi Konular
+
+Bu konular MVP bitmeden yapilmayacak:
+
+| Konu | Durum |
+| --- | --- |
+| 80 seviye tam icerik | Vertical slice sonrasi |
+| Coklu dunya genisletmesi | Faz 2 |
+| Koddan bloga tam donus | MVP disi |
+| Gercek Python/Pyodide | Faz 2 |
+| Ogretmen paneli | Faz 3 |
+| Veli hesabi | Faz 3 |
+| Bulut senkronizasyon | Faz 3 |
+| Odeme, premium, reklam | Yok |
+| Online cocuk kimligi | Yok |
+| Native mobil uygulama | Sonraki asama |
+
+## 2. Oncelik Sistemi
+
+| Oncelik | Anlam |
+| --- | --- |
+| P0 | MVP'nin calismasi icin zorunlu |
+| P1 | MVP kalitesini belirgin artirir |
+| P2 | Faz 2 veya polish |
+| P3 | Backlog |
+
+Her sprint sonunda su kalite kapilari gecmeli:
+
+- `npx tsc --noEmit`
+- `npm.cmd test`
+- `npm.cmd run build`
+- Tum level JSON dosyalari schema validasyonundan gecmeli.
+- Ornek cozumler gercekten hedefe ulasmali.
+
+## 3. Su Anki Teknik Duruma Gore Acil Duzeltmeler
+
+### P0 - Build ve TypeScript'i ayaga kaldir
+
+- [ ] `src/modules/interpreter/parser.ts` syntax hatalarini temizle.
+- [ ] Duplicate `parseCommand` tanimini tek fonksiyona indir.
+- [ ] Tanimsiz degiskenleri duzelt: `tokens`, `pos`, `numNum`, `code`.
+- [ ] `src/app/demo.tsx` JSX kapanis hatalarini duzelt veya dosyayi gecici olarak kaldir.
+- [ ] `src/pages/settings.tsx` syntax hatasini duzelt.
+- [ ] Next 16 Turbopack ile `next.config.js` webpack/PWA cakismasini duzelt.
+- [ ] App Router sayfalarinda `use client` gereken dosyalari isaretle.
+- [ ] App Router icinde `next/router` yerine `next/navigation` kullan.
+- [ ] Eksik UI componentlerini olustur veya importlarini kaldir: `Input`, `Select`, `Avatar`.
+- [ ] Path alias kullanimini duzelt: `@/src/...` yerine `@/modules/...`, `@/components/...`, `@/storage/...`.
+
+### P0 - Test altyapisini duzelt
+
+- [ ] Vitest icin jsdom ortamini kur veya localStorage testlerini mock'la.
+- [ ] Testlerde path alias cozumlemesini calistir.
+- [ ] Eksik `movement_easy_001.json` dosyasini ekle.
+- [ ] Level validation testini dosya listesini manuel tutmak yerine tum JSON'lari okuyacak hale getir.
+- [ ] Game engine unit testlerini calisir hale getir.
+- [ ] Interpreter parser ve validator icin temel testleri ekle.
+
+## 4. Faz 0 - Temel Altyapi
+
+Amac: Projenin derlenebilir, test edilebilir ve mimari olarak temiz hale gelmesi.
+
+### P0
+
+- [x] Next.js + TypeScript projesi baslatildi.
+- [x] Domain/modul bazli klasor yapisi baslatildi.
+- [x] ESLint, Prettier, TypeScript strict ayarlari baslatildi.
+- [x] Vitest test altyapisi baslatildi.
+- [x] `game`, `editor`, `interpreter`, `levels`, `profiles`, `progress`, `pwa`, `privacy` modulleri acildi.
+- [x] Build hatasiz calismali.
+- [x] TypeScript hatasiz calismali.
+- [x] Testler yesil olmali.
+- [ ] App Router dosya yapisi temizlenmeli.
+- [ ] Kullanilmayan veya yanlis importlar kaldirilmali.
+
+### P1
+
+- [ ] Temel UI theme olustur.
+- [ ] Button, Card, Modal disindaki gerekli UI componentlerini tamamla.
+- [ ] `tr` dil metinlerini merkezi dosyaya tasi.
+- [ ] Dosya karakter kodlamasini UTF-8 olarak standartlastir.
+
+## 5. Faz 1 - Vertical Slice
+
+Amac: Tek dunyada 3-5 seviye ile gercek oynanabilir cekirdegi bitirmek.
+
+### 5.1 Kapsam
+
+- 1 profil
+- 1 dunya: Hareket Dunyasi
+- 3-5 kolay seviye
+- SVG grid renderer
+- Basit editor
+- Bloktan Python benzeri kod uretimi
+- Guvenli yorumlayici
+- Run
+- Step-by-step
+- Hedefe ulasma validasyonu
+- Yildiz sistemi
+- Sonuc ekrani
+- Local progress kaydi
+
+### 5.2 Kabul Kriterleri
+
+- [x] `/onboarding` sayfasinda profil olusturulur.
+- [x] Olusan profil IndexedDB veya localStorage'a yazilir.
+- [x] `/world-map` sayfasi Hareket Dunyasi'ni acik gosterir.
+- [x] `/level/movement_easy_001` gercek JSON verisini yukler.
+- [x] Oyun grid'i placeholder degil, SVG olarak render edilir.
+- [x] `move_forward()`, `turn_left()`, `turn_right()`, `pick_item()` calisir.
+- [x] Run butonu tum komutlari sirayla uygular.
+- [x] Step-by-step komutlari tek tek uygular.
+- [x] Hedefe ulasilinca seviye tamamlanir.
+- [x] Yildiz hesaplanir.
+- [x] Progress kaydedilir.
+- [x] Sayfa refresh sonrasi progress kaybolmaz.
+
+## 6. Seviye JSON Standardi
+
+### 6.1 Koordinat Standardi
+
+- Grid koordinatlari 0-based olacak.
+- `x` araligi: `0 <= x < cols`
+- `y` araligi: `0 <= y < rows`
+- Oyuncu, hedef, obstacle ve item ayni hucrede cakismayacak.
+- Player direction sadece `up`, `right`, `down`, `left` olabilir.
+
+### 6.2 Zorunlu Level Alanlari
+
+```json
+{
+  "id": "movement_easy_001",
+  "world": "movement",
+  "mode": "easy",
+  "order": 1,
+  "title": "Ilk Adimlar",
+  "learningOutcome": "Cocuk sirali hareket komutlariyla hedefe ulasmayi ogrenir.",
+  "topicTags": ["movement", "commands", "sequence"],
+  "childIntro": "Robotu hedefe ulastir.",
+  "grid": { "rows": 5, "cols": 5 },
+  "player": { "x": 1, "y": 2, "direction": "right" },
+  "goal": { "x": 4, "y": 2, "type": "door" },
+  "obstacles": [],
+  "items": [],
+  "availableCommands": ["move_forward", "turn_left", "turn_right"],
+  "availableBlocks": ["move_forward", "turn_left", "turn_right"],
+  "successRules": {
+    "mustReachGoal": true,
+    "mustCollectItems": [],
+    "requiredCommands": [],
+    "forbiddenCommands": []
+  },
+  "starRules": {
+    "oneStar": { "mustComplete": true },
+    "twoStars": { "maxCommands": 4 },
+    "threeStars": { "maxCommands": 3 }
+  },
+  "hints": [
+    "Robot hedefe bakiyor.",
+    "Ileri git komutunu birden fazla kullanabilirsin.",
+    "Uc ileri git komutu yeterli olabilir."
+  ],
+  "solution": {
+    "logic": "Robot hedefe bakiyor ve 3 adim ilerlemeli.",
+    "commands": ["move_forward", "move_forward", "move_forward"],
+    "pythonCode": "move_forward()\nmove_forward()\nmove_forward()"
+  }
+}
+```
+
+### 6.3 Level Validasyonlari
+
+- [x] Schema alanlari dogrulanir.
+- [x] Grid sinirlari dogrulanir.
+- [x] Player grid icinde mi kontrol edilir.
+- [x] Goal grid icinde mi kontrol edilir.
+- [x] Obstacle/item/player/goal cakismalari kontrol edilir.
+- [x] `availableCommands` bilinen komutlardan mi kontrol edilir.
+- [x] `availableBlocks` bilinen bloklardan mi kontrol edilir.
+- [ ] Star rule degerleri mantikli mi kontrol edilir.
+- [x] Ornek cozum komutlari seviyede izinli mi kontrol edilir.
+- [x] Ornek cozum game engine ile calistirilir.
+- [x] Ornek cozum hedefe ulasiyor mu kontrol edilir.
+
+## 7. Python Benzeri DSL Standardi
+
+MVP'de tam Python desteklenmeyecek. Kucuk, guvenli bir DSL desteklenecek.
+
+### P0 Desteklenen Syntax
+
+```python
+move_forward()
+move_forward(3)
+turn_left()
+turn_right()
+pick_item()
+```
+
+### P1 Desteklenen Syntax - Faz 1'e alindi
+
+```python
+repeat(3): move_forward
+```
+
+### P2 Desteklenen Syntax
+
+```python
+if obstacle_ahead():
+    turn_right()
+```
+
+### Yasak Syntax
+
+```python
+import os
+open("file.txt")
+eval("x")
+while True:
+    move_forward()
+```
+
+### Interpreter Kabul Kriterleri
+
+- [x] Parser komut listesini AST veya execution plan'a cevirir.
+- [x] Validator bilinmeyen komutlari yakalar.
+- [x] Validator seviye bazli yasak komutlari yakalar.
+- [x] Sonsuz dongu veya cok uzun execution korunur.
+- [x] Hata mesaji cocuk dostu hale cevrilir.
+- [x] Execution plan game engine'e komut listesi olarak verilir.
+
+## 8. Game Engine
+
+### P0
+
+- [ ] Grid modeli netlestir.
+- [ ] Player modeli netlestir.
+- [ ] Direction sistemi: `up`, `right`, `down`, `left`.
+- [ ] `moveForward()` yaz.
+- [ ] `turnLeft()` yaz.
+- [ ] `turnRight()` yaz.
+- [ ] `pickItem()` yaz.
+- [ ] Grid disina cikma collision'i yaz.
+- [ ] Obstacle collision'i yaz.
+- [ ] Goal kontrolu yaz.
+- [ ] Execution history tut.
+- [ ] Reset ile ilk state'e don.
+
+### P1
+
+- [ ] Item toplama kurallari.
+- [ ] Kapali kapi/anahtar kurallari.
+- [ ] Step-by-step state modeli.
+- [ ] Hata nedenini structured olarak dondur.
+
+## 9. SVG Renderer
+
+### P0
+
+- [ ] Grid karelerini SVG ile ciz.
+- [ ] Player'i SVG veya basit sembol olarak goster.
+- [ ] Goal'i goster.
+- [ ] Obstacle'i goster.
+- [ ] Item'i goster.
+- [ ] Responsive olceklemeyi ayarla.
+
+### P1
+
+- [ ] Hareket animasyonu.
+- [ ] Hata durumunda kisa feedback animasyonu.
+- [ ] Basari durumunda yildiz/goal feedback'i.
+
+## 10. Editor Akisi
+
+MVP icin asil akis:
+
+```txt
+Blockly -> Python benzeri kod -> Parser -> Validator -> Execution plan -> Game engine -> Result -> Progress
+```
+
+### P0
+
+- [ ] Basit Blockly workspace kur.
+- [ ] `move_forward`, `turn_left`, `turn_right`, `pick_item` bloklarini tanimla.
+- [ ] Toolbox'u level `availableBlocks` alanina gore filtrele.
+- [ ] Bloktan kod uret.
+- [ ] Kod alanini guncelle.
+- [ ] Kod alanindan Run calistir.
+
+### P1
+
+- [ ] CodeMirror editor entegrasyonu.
+- [ ] Satir numarasi.
+- [ ] Basit syntax highlight.
+- [ ] Canli validator uyarilari.
+
+### MVP Disi
+
+- [ ] Serbest Python kodundan bloga tam geri donus.
+- [ ] Gelismis AST -> Blockly roundtrip.
+
+## 11. Profil ve Progress
+
+### P0
+
+- [ ] Tek profil olusturma.
+- [ ] Son secili profil localStorage'a yazma.
+- [ ] Profil verisini local IndexedDB veya localStorage'a kaydetme.
+- [ ] Level tamamlaninca progress kaydetme.
+- [ ] En iyi yildiz ve en iyi komut sayisini saklama.
+- [ ] Son basarili cozum kodunu saklama.
+
+### P1
+
+- [ ] Coklu profil.
+- [ ] Profil secme ekrani.
+- [ ] Profil silme/sifirlama kontrollu akis.
+
+## 12. Onboarding
+
+### P0
+
+- [ ] Nickname alanı.
+- [ ] Avatar secimi.
+- [ ] Yas araligi: `6-8`, `8-10`, `10-12`, `12-16`.
+- [ ] Deneyim secimi: `none`, `some`, `scratch`, `python`.
+- [ ] `recommendMode(ageRange, experience)` fonksiyonu.
+- [ ] Dunya haritasina gecis.
+
+### Mod Oneri Kurali
+
+| Yas | Deneyim | Mod |
+| --- | --- | --- |
+| 6-8 | none | easy |
+| 8-10 | none | easy |
+| 8-10 | some/scratch | medium |
+| 10-12 | none/some | medium |
+| 12-16 | herhangi | hard |
+| herhangi | python | hard |
+
+## 13. Dunya Haritasi
+
+### Faz 1
+
+- [ ] Sadece Hareket Dunyasi acik.
+- [ ] Kilitli dunya kartlari opsiyonel.
+- [ ] Tamamlanan seviye sayisi gosterilir.
+- [ ] Toplam yildiz gosterilir.
+
+### Faz 2
+
+- [ ] Sıralama Dunyasi.
+- [ ] Donguler Dunyasi.
+- [ ] Kosullar Dunyasi.
+- [ ] Fonksiyonlar Dunyasi hazirlaniyor sayfasi.
+- [ ] Dunya bazli path-style seviye haritasi.
+
+## 14. Icerik Plani
+
+### Vertical Slice Level Seti
+
+- [ ] `movement_easy_001`: sadece ileri git.
+- [ ] `movement_easy_002`: ileri git + donus.
+- [ ] `movement_easy_003`: obstacle etrafindan dolanma.
+- [ ] `movement_easy_004`: item al + hedefe git.
+- [ ] `movement_easy_005`: daha kisa cozum/yildiz optimizasyonu.
+
+### 80 Level Plani - Faz 2
+
+| Mod | Hareket | Sıralama | Donguler | Kosullar | Toplam |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Kolay | 5 | 5 | 5 | 5 | 20 |
+| Orta | 7 | 7 | 7 | 7 | 28 |
+| Zor | 8 | 8 | 8 | 8 | 32 |
+| Toplam | 20 | 20 | 20 | 20 | 80 |
+
+## 15. Hata Mesaji Standardi
+
+| Teknik Durum | Cocuk Dostu Mesaj |
+| --- | --- |
+| Unknown command | Bu komutu tanimiyorum. Komut adini kontrol eder misin? |
+| Syntax error | Kodda kucuk bir yazim hatasi var. Parantezleri kontrol et. |
+| Out of bounds | Robot haritanin disina cikmaya calisti. Don komutunu deneyebilirsin. |
+| Obstacle collision | Robot engelle karsilasti. Once yonunu degistirmeyi dene. |
+| Goal not reached | Robot hedefe ulasamadi. Bir kac komut eksik olabilir. |
+| Missing item | Bu seviyede once nesneyi alman gerekiyor. |
+| Too many commands | Basardin. Daha kisa bir cozumle daha cok yildiz alabilirsin. |
+
+## 16. Sonuc ve Yildiz Sistemi
+
+### P0
+
+- [ ] 1 yildiz: gorev tamamlandi.
+- [ ] 2 yildiz: gorev tamamlandi ve komut sayisi `twoStars.maxCommands` altinda.
+- [ ] 3 yildiz: gorev tamamlandi ve komut sayisi `threeStars.maxCommands` altinda.
+- [ ] Sonuc ekrani yildizlari gosterir.
+- [ ] Komut sayisini gosterir.
+- [ ] Tekrar dene butonu.
+- [ ] Sonraki seviye butonu.
+- [ ] Dunya haritasina don butonu.
+
+## 17. PWA ve Offline
+
+### Faz 1
+
+- [ ] Manifest temel bilgileri dogru.
+- [ ] PWA config build'i bozmuyor.
+
+### Faz 2
+
+- [ ] App shell offline cache.
+- [ ] Level JSON cache.
+- [ ] SVG asset cache.
+- [ ] Dil dosyasi cache.
+- [ ] Offline fallback.
+- [ ] Update available uyarisi.
+- [ ] IndexedDB migration stratejisi.
+
+## 18. Gizlilik ve Guven
+
+### MVP'de Alinacak Veriler
+
+- nickname
+- avatar
+- yas araligi
+- deneyim seviyesi
+- secili mod
+- local ilerleme
+- yildizlar
+- son basarili cozum
+
+### MVP'de Alinmayacak Veriler
+
+- gercek ad-soyad
+- e-posta
+- telefon
+- konum
+- okul bilgisi
+- veli kimligi
+- online hesap
+
+### P1
+
+- [ ] Veli bilgilendirme sayfasi.
+- [ ] Ucretsiz ve reklamsiz aciklamasi.
+- [ ] Uyelik istemez aciklamasi.
+- [ ] Gercek cocuk kimligi alinmaz aciklamasi.
+- [ ] Ilerleme cihazda saklanir aciklamasi.
+- [ ] Tarayici verisi silinirse ilerleme kaybolabilir uyarisi.
+
+## 19. Internal Level Preview
+
+Bu sayfa 80 seviyeye gecmeden once zorunlu hale gelecek.
+
+### Faz 2 P0
+
+- [ ] `/internal/level-preview` sayfasi.
+- [ ] Dunya secimi.
+- [ ] Mod secimi.
+- [ ] Seviye secimi.
+- [ ] JSON goruntuleme.
+- [ ] Grid onizleme.
+- [ ] Ornek cozum calistirma.
+- [ ] Validasyon sonucunu gosterme.
+- [ ] Yildiz hesaplamasi.
+- [ ] Hatalari listeleme.
+
+## 20. UI/UX Standartlari
+
+### P0
+
+- [ ] Desktop ve tablet ana hedef.
+- [ ] Telefon kullanilabilir ama ana deneyim degil.
+- [ ] Kolay modda buyuk buton ve az secenek.
+- [ ] Orta modda blok + kod iliskisi net.
+- [ ] Zor modda kod alani daha baskin.
+
+### P1
+
+- [ ] Kontrast ve okunabilirlik kontrolu.
+- [ ] Dokunmatik hedef boyutlari.
+- [ ] Keyboard ile temel navigasyon.
+- [ ] Hata mesajlari teknik degil, ogretici.
+
+## 21. Faz 2 Backlog
+
+- [ ] Coklu profil.
+- [ ] 4 oynanabilir dunya.
+- [ ] 80 level.
+- [ ] Veli ozeti.
+- [ ] Offline-first PWA.
+- [ ] Local hata kayitlari.
+- [ ] Internal level preview.
+- [ ] Fonksiyonlar Dunyasi hazirlaniyor sayfasi.
+- [ ] Otomatik takilma algilama.
+- [ ] Rozet ve ilerleme puani.
+- [ ] Profil disa aktarma/yedekleme.
+
+## 22. Faz 3 Backlog
+
+- [ ] Private beta.
+- [ ] 5-20 cocuk/veli testi.
+- [ ] Tablet/laptop gercek kullanim testi.
+- [ ] Seviye zorluk ayari.
+- [ ] Hata mesaji iyilestirme.
+- [ ] UI sadelestirme.
+- [ ] Bulut senkronizasyon.
+- [ ] Veli hesabi.
+- [ ] Ogretmen paneli.
+- [ ] Sinif yonetimi.
+- [ ] Detayli gelisim raporlari.
+
+## 23. Riskler
+
+### Risk: 80 seviyeye erken baslamak
+
+Cozum: 3-5 seviyelik vertical slice bitmeden 80 seviye uretilmeyecek.
+
+### Risk: Blok-kod senkronizasyonu buyumek
+
+Cozum: MVP'de bloktan koda tam destek, koddan bloga tam destek yok.
+
+### Risk: Interpreter'in tam Python'a donusmesi
+
+Cozum: MVP'de kucuk DSL. Tam Python/Pyodide Faz 2.
+
+### Risk: Build/test kirikken urun ozelligi eklemek
+
+Cozum: Build, TypeScript ve testler kirmiziyken yeni ozellik eklenmeyecek.
+
+### Risk: Level hatalari elle yakalanamamak
+
+Cozum: Her level ornek cozumle otomatik test edilecek.
+
+## 24. Ilk Yapilacak Net 20 Is
+
+1. TypeScript syntax hatalarini temizle.
+2. Next 16 build config sorununu duzelt.
+3. App Router icin `use client` ve `next/navigation` duzenlemesini yap.
+4. Eksik UI component importlarini duzelt.
+5. Path alias kullanimlarini duzelt.
+6. Vitest jsdom/localStorage ortamini duzelt.
+7. `movement_easy_001.json` dosyasini ekle.
+8. Level schema ile JSON alan adlarini esitle: `twoStars`, `threeStars`.
+9. Koordinat validasyonunu ekle.
+10. Parser'i MVP DSL icin bastan sade yaz.
+11. Validator'i desteklenen komut listesine bagla.
+12. Game engine'i execution plan ile calisacak hale getir.
+13. SVG grid renderer'i level sayfasina bagla.
+14. Level sayfasinda mock level yerine JSON loader kullan.
+15. Run butonunu gercek execution akisine bagla.
+16. Goal validation ve yildiz hesaplamasini bagla.
+17. Progress kaydini bagla.
+18. Ilk 3 level icin ornek cozum testlerini yaz.
+19. Build/test/tsc kalite kapilarini yesile al.
+20. Sonra Blockly ve CodeMirror polish'e gec.
+
+## 25. Stratejik Not
+
+Bu proje buyuk egitim platformu gibi degil, once calisan bir ogrenme cekirdegi gibi insa edilmeli.
+
+Ilk hedef:
+
+> Bir cocuk profil olustursun, Hareket Dunyasi'nda 3 seviyeye girsin, blok veya kodla robotu hareket ettirsin, hata yaptiginda nedenini gorsun, adim adim calistirsin, yildiz alsin ve son basarili cozumu kaydedilsin.
+
+Bu akış calisiyorsa urunun omurgasi vardir. Bu calismadan 80 seviye, PWA, veli ozeti, tema, maskot ve diger katmanlar sadece vitrin olur.

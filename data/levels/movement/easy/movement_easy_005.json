@@ -1,0 +1,71 @@
+{
+  "id": "movement_easy_005",
+  "world": "movement",
+  "mode": "easy",
+  "order": 5,
+  "title": "Uzun Yol",
+  "learningOutcome": "Daha uzun bir rotayi bloklarla planlama.",
+  "topicTags": ["movement", "commands", "sequence", "path"],
+  "childIntro": "Robot hedefe ulasmak icin once yukari, sonra saga, sonra asagi gitmeli.",
+  "grid": {
+    "rows": 6,
+    "cols": 6
+  },
+  "player": {
+    "x": 0,
+    "y": 4,
+    "direction": "right"
+  },
+  "goal": {
+    "x": 5,
+    "y": 3,
+    "type": "door"
+  },
+  "obstacles": [
+    {
+      "x": 2,
+      "y": 4,
+      "type": "wall"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "type": "wall"
+    },
+    {
+      "x": 4,
+      "y": 3,
+      "type": "wall"
+    }
+  ],
+  "items": [],
+  "availableCommands": ["move_forward", "move_up", "move_right", "move_left", "move_down"],
+  "availableBlocks": ["move_forward", "move_up", "move_right", "move_left", "move_down"],
+  "successRules": {
+    "mustReachGoal": true,
+    "mustCollectItems": [],
+    "requiredCommands": [],
+    "forbiddenCommands": []
+  },
+  "starRules": {
+    "oneStar": {
+      "mustComplete": true
+    },
+    "twoStars": {
+      "maxCommands": 10
+    },
+    "threeStars": {
+      "maxCommands": 8
+    }
+  },
+  "hints": [
+    "Duz gitmek engellere carptirir.",
+    "Once yukari cik, sonra uzun saga rota ciz.",
+    "Iki Yukari, bes Sag ve bir Asagi blogu iyi bir rota olabilir."
+  ],
+  "solution": {
+    "logic": "Robot iki kare yukari cikar, bes kare saga gider ve bir kare asagi inerek hedefe ulasir.",
+    "commands": ["move_up", "move_up", "move_right", "move_right", "move_right", "move_right", "move_right", "move_down"],
+    "pythonCode": "move_up()\nmove_up()\nmove_right()\nmove_right()\nmove_right()\nmove_right()\nmove_right()\nmove_down()"
+  }
+}

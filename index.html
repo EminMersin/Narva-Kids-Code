@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Coding Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- World Map Screen -->
+        <div id="world-map" class="screen active">
+            <h1>World Map</h1>
+            <div id="level-buttons" class="level-grid">
+                <!-- Level buttons will be generated here -->
+            </div>
+        </div>
+
+        <!-- Level Screen -->
+        <div id="level-screen" class="screen">
+            <div class="level-header">
+                <button id="back-to-map" class="btn">Back</button>
+                <h2>Level <span id="level-number"></span></h2>
+                <div class="stars-display">
+                    <span>Stars: </span>
+                    <span id="stars-earned">0</span>
+                </div>
+            </div>
+            <div class="game-area">
+                <div id="game-board" class="board">
+                    <!-- Game board with robot, goal, obstacles -->
+                </div>
+                <div class="controls">
+                    <div class="command-input">
+                        <label for="command-input">Commands:</label>
+                        <input type="text" id="command-input" placeholder="Enter commands (e.g., move_up, move_left)">
+                        <button id="execute-commands" class="btn">Execute</button>
+                    </div>
+                    <div class="command-buttons">
+                        <button class="cmd-btn" data-cmd="move_up">↑</button>
+                        <button class="cmd-btn" data-cmd="move_down">↓</button>
+                        <button class="cmd-btn" data-cmd="move_left">←</button>
+                        <button class="cmd-btn" data-cmd="move_right">→</button>
+                    </div>
+                    <button id="hint-btn" class="btn">Hint</button>
+                    <button id="reset-btn" class="btn">Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen" class="screen">
+            <div class="result-panel">
+                <h2>Başardın!</h2>
+                <p>Stars earned: <span id="result-stars">0</span></p>
+                <div class="result-buttons">
+                    <button id="retry-level" class="btn">Retry</button>
+                    <button id="next-level" class="btn">Next Level</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
