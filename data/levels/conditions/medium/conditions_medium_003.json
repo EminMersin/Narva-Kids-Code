@@ -26,28 +26,28 @@
   "childIntro": "Kosul dogruysa if blogu, degilse else blogu calisir.",
   "grid": {
     "rows": 5,
-    "cols": 6
+    "cols": 7
   },
   "player": {
-    "x": 0,
+    "x": 1,
     "y": 2,
     "direction": "right"
   },
   "goal": {
-    "x": 5,
+    "x": 6,
     "y": 1,
     "type": "door"
   },
   "obstacles": [
     {
-      "x": 1,
+      "x": 2,
       "y": 2,
       "type": "wall"
     }
   ],
   "items": [
     {
-      "x": 1,
+      "x": 2,
       "y": 1,
       "type": "carrot"
     }

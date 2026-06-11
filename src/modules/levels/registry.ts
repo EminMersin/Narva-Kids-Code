@@ -122,20 +122,7 @@ import level118 from '../../../data/levels/challenge/easy/challenge_easy_001.jso
 import level119 from '../../../data/levels/challenge/medium/challenge_medium_001.json';
 
 export type TrackId = 'python' | 'web';
-export type WorldId =
-  | 'movement'
-  | 'sequence'
-  | 'conditions'
-  | 'loops'
-  | 'matchcase'
-  | 'challenge'
-  | 'web_html'
-  | 'web_text'
-  | 'web_media'
-  | 'web_structure'
-  | 'web_css'
-  | 'web_box'
-  | 'web_challenge';
+export type WorldId = 'movement' | 'sequence' | 'conditions' | 'loops' | 'matchcase' | 'challenge' | 'web_html' | 'web_text' | 'web_media' | 'web_structure' | 'web_css' | 'web_box' | 'web_challenge';
 export type LevelId = string;
 
 export interface WorldMeta {

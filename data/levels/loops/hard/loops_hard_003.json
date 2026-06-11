@@ -25,15 +25,15 @@
   "childIntro": "For range, kac tekrar yapilacagini bastan bilir.",
   "grid": {
     "rows": 5,
-    "cols": 6
+    "cols": 7
   },
   "player": {
-    "x": 0,
+    "x": 1,
     "y": 2,
     "direction": "right"
   },
   "goal": {
-    "x": 5,
+    "x": 6,
     "y": 1,
     "type": "door"
   },

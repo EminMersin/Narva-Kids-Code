@@ -23,13 +23,13 @@
     "cols": 5
   },
   "player": {
-    "x": 0,
-    "y": 2,
+    "x": 1,
+    "y": 1,
     "direction": "right"
   },
   "goal": {
-    "x": 3,
-    "y": 2,
+    "x": 4,
+    "y": 1,
     "type": "door"
   },
   "obstacles": [],

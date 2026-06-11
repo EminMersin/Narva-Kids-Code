@@ -30,25 +30,25 @@
   },
   "player": {
     "x": 0,
-    "y": 2,
+    "y": 3,
     "direction": "right"
   },
   "goal": {
     "x": 3,
-    "y": 1,
+    "y": 2,
     "type": "door"
   },
   "obstacles": [
     {
       "x": 1,
-      "y": 2,
+      "y": 3,
       "type": "wall"
     }
   ],
   "items": [
     {
       "x": 1,
-      "y": 1,
+      "y": 2,
       "type": "carrot"
     }
   ],

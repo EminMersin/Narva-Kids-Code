@@ -618,6 +618,29 @@ p {
   background: #d9f5ff;
 }
 
+.board-avatar-hop {
+  animation: board-avatar-hop 230ms ease-in-out;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes board-avatar-hop {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  48% {
+    transform: translateY(-20%) scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .board-avatar-hop {
+    animation: none;
+  }
+}
+
 .code-panel {
   position: sticky;
   top: 1rem;

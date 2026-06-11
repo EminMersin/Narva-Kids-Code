@@ -23,16 +23,16 @@
   "childIntro": "Operatorler sayilari birlestirir ve yeni hareket sayisi uretir.",
   "grid": {
     "rows": 5,
-    "cols": 8
+    "cols": 9
   },
   "player": {
-    "x": 0,
-    "y": 2,
+    "x": 1,
+    "y": 3,
     "direction": "right"
   },
   "goal": {
-    "x": 7,
-    "y": 1,
+    "x": 8,
+    "y": 2,
     "type": "door"
   },
   "obstacles": [],

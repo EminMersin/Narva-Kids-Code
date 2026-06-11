@@ -26,15 +26,15 @@
   "childIntro": "Bu gorevde birden fazla Python fikrini ayni rotada kullan.",
   "grid": {
     "rows": 5,
-    "cols": 8
+    "cols": 10
   },
   "player": {
-    "x": 0,
+    "x": 2,
     "y": 2,
     "direction": "right"
   },
   "goal": {
-    "x": 7,
+    "x": 9,
     "y": 1,
     "type": "door"
   },

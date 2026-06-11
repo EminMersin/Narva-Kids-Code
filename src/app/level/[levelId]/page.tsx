@@ -424,6 +424,12 @@ function wait(ms: number): Promise<void> {
   return new Promise((resolve) => window.setTimeout(resolve, ms));
 }
 
+interface PlayerMotion {
+  from: { x: number; y: number };
+  to: { x: number; y: number };
+  sequence: number;
+}
+
 export default function LevelPage() {
   const params = useParams<{ levelId: string }>();
   const level = getLevelById(params.levelId) || getLevelById(getFirstLevelId())!;
@@ -458,8 +464,11 @@ function RobotLevelPage({ level }: { level: RobotLevelData }) {
   const [editorMode, setEditorMode] = useState<EditorMode>('blocks');
   const [manualCode, setManualCode] = useState('');
   const [selectedDirection, setSelectedDirection] = useState('move_right');
+  const [playerMotion, setPlayerMotion] = useState<PlayerMotion | null>(null);
   const dragSourceRef = useRef<DragSource | null>(null);
   const touchDragSourceRef = useRef<DragSource | null>(null);
+  const playerRef = useRef(level.player);
+  const motionSequenceRef = useRef(0);
 
   const engine = useMemo(() => new GameEngine(level), [level]);
   const blockCode = codeFromBlocks(blocks);
@@ -481,6 +490,8 @@ function RobotLevelPage({ level }: { level: RobotLevelData }) {
     setBlocks([]);
     setMessage('');
     setPlayer(level.player);
+    playerRef.current = level.player;
+    setPlayerMotion(null);
     setItems(level.items);
     setStars(0);
     setFinalStars(0);
@@ -815,6 +826,8 @@ function RobotLevelPage({ level }: { level: RobotLevelData }) {
     setManualCode('');
     setEditorMode('blocks');
     setPlayer(level.player);
+    playerRef.current = level.player;
+    setPlayerMotion(null);
     setItems(level.items);
     setStars(0);
     setMessage('');
@@ -822,6 +835,34 @@ function RobotLevelPage({ level }: { level: RobotLevelData }) {
     setFinalCommandCount(0);
     setShowResult(false);
     clearExecutionState();
+  };
+
+  const syncPlayerFromEngine = async () => {
+    const target = { ...engine.stateData.player };
+    let current = { ...playerRef.current };
+
+    while (current.x !== target.x || current.y !== target.y) {
+      const next = {
+        ...target,
+        x: current.x + Math.sign(target.x - current.x),
+        y: current.y + Math.sign(target.y - current.y),
+      };
+      motionSequenceRef.current += 1;
+      setPlayerMotion({
+        from: { x: current.x, y: current.y },
+        to: { x: next.x, y: next.y },
+        sequence: motionSequenceRef.current,
+      });
+      playerRef.current = next;
+      setPlayer(next);
+      current = next;
+      await wait(230);
+    }
+
+    if (current.direction !== target.direction) {
+      playerRef.current = target;
+      setPlayer(target);
+    }
   };
 
   const validateStartBlock = (): string | null => {
@@ -838,6 +879,8 @@ function RobotLevelPage({ level }: { level: RobotLevelData }) {
   const runCode = async () => {
     engine.reset(level);
     setPlayer(level.player);
+    playerRef.current = level.player;
+    setPlayerMotion(null);
     setItems(level.items);
     const startError = validateStartBlock();
     if (startError) {
@@ -859,7 +902,7 @@ function RobotLevelPage({ level }: { level: RobotLevelData }) {
       setActiveCommandIndex(index);
       await wait(160);
       const ok = await engine.execute(command);
-      setPlayer({ ...engine.stateData.player });
+      await syncPlayerFromEngine();
       setItems([...engine.stateData.items]);
       if (!ok) {
         setErrorCommandIndex(index);
@@ -871,7 +914,7 @@ function RobotLevelPage({ level }: { level: RobotLevelData }) {
 
     const completed = engine.checkGoal();
     const earnedStars = calculateStars(level, completed, engine.stateData.commandCount);
-    setPlayer({ ...engine.stateData.player });
+    await syncPlayerFromEngine();
     setItems([...engine.stateData.items]);
     setStars(earnedStars);
     setActiveCommandIndex(null);
@@ -908,6 +951,8 @@ function RobotLevelPage({ level }: { level: RobotLevelData }) {
     if (!stepCommands.length) {
       engine.reset(level);
       setPlayer(level.player);
+      playerRef.current = level.player;
+      setPlayerMotion(null);
       setItems(level.items);
       setShowResult(false);
       setStars(0);
@@ -920,7 +965,7 @@ function RobotLevelPage({ level }: { level: RobotLevelData }) {
     setActiveCommandIndex(currentIndex);
     setErrorCommandIndex(null);
     const ok = await engine.execute(command);
-    setPlayer({ ...engine.stateData.player });
+    await syncPlayerFromEngine();
     setItems([...engine.stateData.items]);
 
     if (!ok) {
@@ -1604,11 +1649,26 @@ function RobotLevelPage({ level }: { level: RobotLevelData }) {
               <circle cx={level.goal.x + 0.5} cy={level.goal.y + 0.56} r="0.08" fill="#ffcf5a" />
               <rect x={level.goal.x + 0.18} y={level.goal.y + 0.78} width="0.64" height="0.1" rx="0.04" fill="#178c55" />
             </g>
-            <g>
-              <circle cx={player.x + 0.5} cy={player.y + 0.5} r="0.34" fill="url(#robotGradient)" />
-              <circle cx={player.x + 0.38} cy={player.y + 0.43} r="0.04" fill="#10233f" />
-              <circle cx={player.x + 0.62} cy={player.y + 0.43} r="0.04" fill="#10233f" />
-              <rect x={player.x + 0.35} y={player.y + 0.58} width="0.3" height="0.05" rx="0.03" fill="#10233f" />
+            <g
+              key={playerMotion?.sequence ?? 0}
+              transform={`translate(${player.x} ${player.y})`}
+            >
+              {playerMotion && (
+                <animateTransform
+                  attributeName="transform"
+                  type="translate"
+                  from={`${playerMotion.from.x} ${playerMotion.from.y}`}
+                  to={`${playerMotion.to.x} ${playerMotion.to.y}`}
+                  dur="230ms"
+                  fill="freeze"
+                />
+              )}
+              <g className="board-avatar-hop">
+                <circle cx="0.5" cy="0.5" r="0.34" fill="url(#robotGradient)" />
+                <circle cx="0.38" cy="0.43" r="0.04" fill="#10233f" />
+                <circle cx="0.62" cy="0.43" r="0.04" fill="#10233f" />
+                <rect x="0.35" y="0.58" width="0.3" height="0.05" rx="0.03" fill="#10233f" />
+              </g>
             </g>
           </svg>
         </div>

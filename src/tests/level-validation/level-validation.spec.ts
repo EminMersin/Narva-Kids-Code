@@ -32,6 +32,19 @@ describe('Level Validation', () => {
     });
   });
 
+  test('Generated Python levels use varied safe starting positions', () => {
+    const generatedRobotLevels = levelRegistry
+      .filter((entry) => entry.track === 'python')
+      .slice(8)
+      .map((entry) => entry.levelData)
+      .filter((level) => !isWebLevel(level));
+    const starts = new Set(generatedRobotLevels.map((level) => `${level.player.x},${level.player.y}`));
+
+    expect(starts.size).toBeGreaterThanOrEqual(10);
+    expect(generatedRobotLevels.some((level) => level.player.x > 0)).toBe(true);
+    expect(generatedRobotLevels.some((level) => level.player.y !== 2)).toBe(true);
+  });
+
   test('Example solutions compile and complete each level', async () => {
     for (const { levelData: level } of levelRegistry) {
       if (isWebLevel(level)) {

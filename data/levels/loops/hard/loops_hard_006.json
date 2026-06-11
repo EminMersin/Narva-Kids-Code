@@ -25,16 +25,16 @@
   "childIntro": "While kosul dogru oldugu surece calisir; sayaci azaltmayi unutma.",
   "grid": {
     "rows": 5,
-    "cols": 7
+    "cols": 8
   },
   "player": {
-    "x": 0,
-    "y": 2,
+    "x": 1,
+    "y": 1,
     "direction": "right"
   },
   "goal": {
-    "x": 6,
-    "y": 2,
+    "x": 7,
+    "y": 1,
     "type": "door"
   },
   "obstacles": [],

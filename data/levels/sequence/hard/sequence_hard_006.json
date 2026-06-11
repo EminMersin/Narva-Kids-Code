@@ -23,15 +23,15 @@
   "childIntro": "Degisken, sayiyi saklayan kucuk bir kutu gibidir.",
   "grid": {
     "rows": 5,
-    "cols": 5
+    "cols": 7
   },
   "player": {
-    "x": 0,
+    "x": 2,
     "y": 2,
     "direction": "right"
   },
   "goal": {
-    "x": 4,
+    "x": 6,
     "y": 1,
     "type": "door"
   },

@@ -25,15 +25,15 @@
   "childIntro": "While kosul dogru oldugu surece calisir; sayaci azaltmayi unutma.",
   "grid": {
     "rows": 5,
-    "cols": 6
+    "cols": 8
   },
   "player": {
-    "x": 0,
+    "x": 2,
     "y": 2,
     "direction": "right"
   },
   "goal": {
-    "x": 5,
+    "x": 7,
     "y": 2,
     "type": "door"
   },

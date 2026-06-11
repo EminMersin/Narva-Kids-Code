@@ -128,6 +128,58 @@ function simulateRoute(player, commands, obstacles, items = []) {
   return commands.reduce((position, command) => simulateCommand(position, command, obstacles, items), { ...player });
 }
 
+function routePositions(player, commands, obstacles, items = []) {
+  const positions = [{ ...player }];
+  let current = { ...player };
+
+  for (const command of commands) {
+    const next = simulateCommand(current, command, obstacles, items);
+    const deltaX = next.x - current.x;
+    const deltaY = next.y - current.y;
+    const steps = Math.max(Math.abs(deltaX), Math.abs(deltaY));
+
+    for (let step = 1; step <= steps; step++) {
+      positions.push({
+        ...next,
+        x: current.x + Math.sign(deltaX) * step,
+        y: current.y + Math.sign(deltaY) * step,
+      });
+    }
+    current = next;
+  }
+
+  return positions;
+}
+
+function variedPlacement(player, commands, obstacles, items, seed) {
+  const positions = routePositions(player, commands, obstacles, items);
+  const minX = Math.min(...positions.map((position) => position.x));
+  const maxX = Math.max(...positions.map((position) => position.x));
+  const minY = Math.min(...positions.map((position) => position.y));
+  const maxY = Math.max(...positions.map((position) => position.y));
+  const minDx = Math.max(0, -minX);
+  const maxDx = Math.max(minDx, 11 - maxX);
+  const minDy = -minY;
+  const maxDy = 4 - maxY;
+  const xOffsets = Array.from(
+    { length: Math.min(3, maxDx - minDx + 1) },
+    (_, index) => minDx + index,
+  );
+  const yOffsets = Array.from(
+    { length: Math.max(1, maxDy - minDy + 1) },
+    (_, index) => minDy + index,
+  );
+  const dx = xOffsets[seed % xOffsets.length];
+  const dy = yOffsets[Math.floor(seed / xOffsets.length) % yOffsets.length];
+  const translate = (position) => ({ ...position, x: position.x + dx, y: position.y + dy });
+
+  return {
+    player: translate(player),
+    obstacles: obstacles.map(translate),
+    items: items.map(translate),
+  };
+}
+
 function baseLevel({
   id,
   world,
@@ -188,9 +240,14 @@ function baseLevel({
 }
 
 function routeLevel({ world, mode, order, concept, title, learningOutcome, childIntro, pythonCode, solutionCommands, available, hints, obstacles = [], items = [] }) {
-  const player = { x: 0, y: 2, direction: 'right' };
-  const goal = simulateRoute(player, solutionCommands, obstacles, items);
-  const maxObstacleX = obstacles.reduce((max, obstacle) => Math.max(max, obstacle.x), 0);
+  const basePlayer = { x: 0, y: 2, direction: 'right' };
+  const seed = worldOrder.indexOf(world) * 37 + modeOrder.indexOf(mode) * 11 + order;
+  const placement = variedPlacement(basePlayer, solutionCommands, obstacles, items, seed);
+  const player = placement.player;
+  const placedObstacles = placement.obstacles;
+  const placedItems = placement.items;
+  const goal = simulateRoute(player, solutionCommands, placedObstacles, placedItems);
+  const maxObstacleX = placedObstacles.reduce((max, obstacle) => Math.max(max, obstacle.x), 0);
   return baseLevel({
     id: `${world}_${mode}_${String(order).padStart(3, '0')}`,
     world,
@@ -202,8 +259,8 @@ function routeLevel({ world, mode, order, concept, title, learningOutcome, child
     childIntro,
     player,
     goal: { ...goal, x: Math.max(goal.x, maxObstacleX + 1) },
-    obstacles,
-    items,
+    obstacles: placedObstacles,
+    items: placedItems,
     available,
     hints,
     solutionCommands,
@@ -465,12 +522,22 @@ function writeRegistry(files) {
   });
 
   const entries = files.map((_, index) => `  level${index} as LevelData,`);
-  const worldIdType = worldOrder.map((world) => `'${world}'`).join(' | ');
+  const webWorldOrder = ['web_html', 'web_text', 'web_media', 'web_structure', 'web_css', 'web_box', 'web_challenge'];
+  const worldIdType = [...worldOrder, ...webWorldOrder].map((world) => `'${world}'`).join(' | ');
   const worldMeta = worldOrder
-    .map((world, index) => `  ${world}: { id: '${world}', title: '${worldTitles[world]}', description: '${worldDescriptions[world]}', order: ${index + 1} },`)
+    .map((world, index) => `  ${world}: { id: '${world}', track: 'python', title: '${worldTitles[world]}', description: '${worldDescriptions[world]}', order: ${index + 1} },`)
     .join('\n');
+  const webWorldMeta = [
+    "  web_html: { id: 'web_html', track: 'web', title: 'HTML Iskeleti', description: 'Html, head, title, body ve gorunen basligi dogru sirada kurar.', order: 1 },",
+    "  web_text: { id: 'web_text', track: 'web', title: 'Metin Bloklari', description: 'Baslik, paragraf ve vurgu etiketleriyle okunabilir sayfa kurar.', order: 2 },",
+    "  web_media: { id: 'web_media', track: 'web', title: 'Gorsel ve Baglanti', description: 'Gorsel aciklamasi ve baglanti etiketlerini kullanir.', order: 3 },",
+    "  web_structure: { id: 'web_structure', track: 'web', title: 'Sayfa Bolumleri', description: 'Liste, kutu ve bolumlerle icerigi duzenler.', order: 4 },",
+    "  web_css: { id: 'web_css', track: 'web', title: 'CSS Temelleri', description: 'Renk, yazi boyutu ve hizalama ayarlarini kullanir.', order: 5 },",
+    "  web_box: { id: 'web_box', track: 'web', title: 'Kutu Modeli', description: 'Padding, border ve kose ayarlariyla kart tasarlar.', order: 6 },",
+    "  web_challenge: { id: 'web_challenge', track: 'web', title: 'Mini Web Gorevleri', description: 'HTML ve CSS fikirlerini tek sayfada birlestirir.', order: 7 },",
+  ].join('\n');
 
-  const content = `import type { LevelData, LevelMode } from './schema';\n${imports.join('\n')}\n\nexport type WorldId = ${worldIdType};\nexport type LevelId = string;\n\nexport interface WorldMeta {\n  id: WorldId;\n  title: string;\n  description: string;\n  order: number;\n}\n\nexport interface LevelRegistryEntry {\n  id: LevelId;\n  world: WorldId;\n  mode: LevelMode;\n  order: number;\n  title: string;\n  levelData: LevelData;\n}\n\nexport const WORLD_ORDER: WorldId[] = ${JSON.stringify(worldOrder)};\nexport const MODE_ORDER: LevelMode[] = ${JSON.stringify(modeOrder)};\n\nexport const WORLD_META: Record<WorldId, WorldMeta> = {\n${worldMeta}\n};\n\nconst LEVEL_DATA: LevelData[] = [\n${entries.join('\n')}\n];\n\nfunction compareLevels(a: LevelData, b: LevelData): number {\n  const worldDiff = WORLD_ORDER.indexOf(a.world as WorldId) - WORLD_ORDER.indexOf(b.world as WorldId);\n  if (worldDiff !== 0) return worldDiff;\n  const modeDiff = MODE_ORDER.indexOf(a.mode) - MODE_ORDER.indexOf(b.mode);\n  if (modeDiff !== 0) return modeDiff;\n  return a.order - b.order;\n}\n\nexport const levelRegistry: LevelRegistryEntry[] = LEVEL_DATA\n  .slice()\n  .sort(compareLevels)\n  .map((level) => ({\n    id: level.id,\n    world: level.world as WorldId,\n    mode: level.mode,\n    order: level.order,\n    title: level.title,\n    levelData: level,\n  }));\n\nexport const allLevelIds: LevelId[] = levelRegistry.map((entry) => entry.id);\n\nexport function getWorlds(): WorldMeta[] {\n  return WORLD_ORDER.map((worldId) => WORLD_META[worldId]);\n}\n\nexport function getLevelById(id: string): LevelData | null {\n  return levelRegistry.find((entry) => entry.id === id)?.levelData ?? null;\n}\n\nexport function getLevelsByWorld(world: WorldId): LevelRegistryEntry[] {\n  return levelRegistry.filter((entry) => entry.world === world);\n}\n\nexport function getLevelsByWorldAndMode(world: WorldId, mode: LevelMode): LevelRegistryEntry[] {\n  return levelRegistry.filter((entry) => entry.world === world && entry.mode === mode);\n}\n\nexport function getNextLevelId(id: string): LevelId | null {\n  const index = allLevelIds.indexOf(id);\n  return index >= 0 && index < allLevelIds.length - 1 ? allLevelIds[index + 1] : null;\n}\n\nexport function getPreviousLevelId(id: string): LevelId | null {\n  const index = allLevelIds.indexOf(id);\n  return index > 0 ? allLevelIds[index - 1] : null;\n}\n\nexport function getFirstLevelId(): LevelId {\n  return allLevelIds[0];\n}\n`;
+  const content = `import type { LevelData, LevelMode } from './schema';\nimport { webLevels } from './webLevels';\n${imports.join('\n')}\n\nexport type TrackId = 'python' | 'web';\nexport type WorldId = ${worldIdType};\nexport type LevelId = string;\n\nexport interface WorldMeta {\n  id: WorldId;\n  track: TrackId;\n  title: string;\n  description: string;\n  order: number;\n}\n\nexport interface LevelRegistryEntry {\n  id: LevelId;\n  track: TrackId;\n  world: WorldId;\n  mode: LevelMode;\n  order: number;\n  title: string;\n  levelData: LevelData;\n}\n\nexport const PYTHON_WORLD_ORDER: WorldId[] = ${JSON.stringify(worldOrder)};\nexport const WEB_WORLD_ORDER: WorldId[] = ${JSON.stringify(webWorldOrder)};\nexport const WORLD_ORDER: WorldId[] = [...PYTHON_WORLD_ORDER, ...WEB_WORLD_ORDER];\nexport const MODE_ORDER: LevelMode[] = ${JSON.stringify(modeOrder)};\n\nexport const WORLD_META: Record<WorldId, WorldMeta> = {\n${worldMeta}\n${webWorldMeta}\n};\n\nconst LEVEL_DATA: LevelData[] = [\n${entries.join('\n')}\n  ...webLevels,\n];\n\nfunction compareLevels(a: LevelData, b: LevelData): number {\n  const worldDiff = WORLD_ORDER.indexOf(a.world as WorldId) - WORLD_ORDER.indexOf(b.world as WorldId);\n  if (worldDiff !== 0) return worldDiff;\n  const modeDiff = MODE_ORDER.indexOf(a.mode) - MODE_ORDER.indexOf(b.mode);\n  if (modeDiff !== 0) return modeDiff;\n  return a.order - b.order;\n}\n\nfunction trackForWorld(world: WorldId): TrackId {\n  return WORLD_META[world].track;\n}\n\nexport const levelRegistry: LevelRegistryEntry[] = LEVEL_DATA\n  .slice()\n  .sort(compareLevels)\n  .map((level) => ({\n    id: level.id,\n    track: trackForWorld(level.world as WorldId),\n    world: level.world as WorldId,\n    mode: level.mode,\n    order: level.order,\n    title: level.title,\n    levelData: level,\n  }));\n\nexport const allLevelIds: LevelId[] = levelRegistry.map((entry) => entry.id);\n\nexport function getWorlds(): WorldMeta[] {\n  return WORLD_ORDER.map((worldId) => WORLD_META[worldId]);\n}\n\nexport function getLevelById(id: string): LevelData | null {\n  return levelRegistry.find((entry) => entry.id === id)?.levelData ?? null;\n}\n\nexport function getLevelsByWorld(world: WorldId): LevelRegistryEntry[] {\n  return levelRegistry.filter((entry) => entry.world === world);\n}\n\nexport function getLevelsByWorldAndMode(world: WorldId, mode: LevelMode): LevelRegistryEntry[] {\n  return levelRegistry.filter((entry) => entry.world === world && entry.mode === mode);\n}\n\nexport function getNextLevelId(id: string): LevelId | null {\n  const entry = levelRegistry.find((item) => item.id === id);\n  if (!entry) return null;\n  const sameTrackIds = levelRegistry.filter((item) => item.track === entry.track).map((item) => item.id);\n  const index = sameTrackIds.indexOf(id);\n  return index >= 0 && index < sameTrackIds.length - 1 ? sameTrackIds[index + 1] : null;\n}\n\nexport function getPreviousLevelId(id: string): LevelId | null {\n  const entry = levelRegistry.find((item) => item.id === id);\n  if (!entry) return null;\n  const sameTrackIds = levelRegistry.filter((item) => item.track === entry.track).map((item) => item.id);\n  const index = sameTrackIds.indexOf(id);\n  return index > 0 ? sameTrackIds[index - 1] : null;\n}\n\nexport function getFirstLevelId(): LevelId {\n  return allLevelIds[0];\n}\n`;
   writeFileSync(registryPath, content);
 }
 

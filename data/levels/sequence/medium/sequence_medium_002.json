@@ -23,16 +23,16 @@
   "childIntro": "Degisken, sayiyi saklayan kucuk bir kutu gibidir.",
   "grid": {
     "rows": 5,
-    "cols": 6
+    "cols": 8
   },
   "player": {
-    "x": 0,
-    "y": 2,
+    "x": 2,
+    "y": 1,
     "direction": "right"
   },
   "goal": {
-    "x": 5,
-    "y": 2,
+    "x": 7,
+    "y": 1,
     "type": "door"
   },
   "obstacles": [],

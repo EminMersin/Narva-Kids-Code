@@ -27,12 +27,12 @@
   },
   "player": {
     "x": 0,
-    "y": 2,
+    "y": 1,
     "direction": "right"
   },
   "goal": {
     "x": 2,
-    "y": 3,
+    "y": 2,
     "type": "door"
   },
   "obstacles": [],
