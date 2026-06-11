@@ -10,3 +10,5 @@ build/
 .next-dev.out.log
 tsconfig.tsbuildinfo
 .DS_Store
+*.kate-swp
+.*.kate-swp
