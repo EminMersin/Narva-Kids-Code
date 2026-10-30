@@ -7,7 +7,7 @@ export class ServiceWorker {
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker
-          .register('/service-worker.js')
+          .register('/sw.js', { scope: '/' })
           .then((registration) => {
             console.info('[ServiceWorker] Registered:', registration.scope);
           })

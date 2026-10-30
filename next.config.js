@@ -1,7 +1,10 @@
 import nextPwa from 'next-pwa';
+import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare';
 
 const withPWA = nextPwa({
   dest: 'public',
+  sw: 'sw.js',
+  scope: '/',
   register: true,
   skipWaiting: true,
   runtimeCaching: [
@@ -34,7 +37,6 @@ const withPWA = nextPwa({
 });
 
 const nextConfig = {
-  basePath: '/kids',
   turbopack: {},
   webpack(config) {
     config.module.rules.push({
@@ -46,3 +48,5 @@ const nextConfig = {
 };
 
 export default withPWA(nextConfig);
+
+initOpenNextCloudflareForDev();
